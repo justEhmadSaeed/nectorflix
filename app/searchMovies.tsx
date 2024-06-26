@@ -18,7 +18,9 @@ export default function SearchMovies({
   );
 
   const moviesToDisplay =
-    searchedMovies.length > 0 ? searchedMovies : upcomingMovies;
+    searchedMovies.length > 0
+      ? { movies: searchedMovies, heading: 'Searched Results' }
+      : { movies: upcomingMovies, heading: 'Upcoming Movies' };
   return (
     <div className='flex flex-col items-center gap-3 w-full'>
       <div className=' lg:w-2/3'>
@@ -30,8 +32,8 @@ export default function SearchMovies({
         </p>
       )}
       <MoviesGrid
-        heading='Upcoming Movies'
-        movies={moviesToDisplay}
+        heading={moviesToDisplay.heading}
+        movies={moviesToDisplay.movies}
       />
     </div>
   );

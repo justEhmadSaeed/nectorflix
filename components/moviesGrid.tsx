@@ -1,7 +1,6 @@
 import { type Movie } from '@/interfaces';
 import { title } from './primitives';
-import { Image } from '@nextui-org/image';
-import { Link } from '@nextui-org/link';
+import { Image, Link } from '@/utils/nextui';
 
 interface MoviesGridProps {
   heading: string;

@@ -67,14 +67,17 @@ export const SunFilledIcon = ({
   </svg>
 );
 
-export const HeartFilledIcon = ({
+export const HeartIcon = ({
   size = 24,
   width,
   height,
+  strokeWidth = 1.5,
+  fill = 'none',
   ...props
 }: IconSvgProps): JSX.Element => (
   <svg
     aria-hidden='true'
+    fill={fill}
     focusable='false'
     height={size ?? height}
     role='presentation'
@@ -83,11 +86,11 @@ export const HeartFilledIcon = ({
     {...props}
   >
     <path
-      d='M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z'
-      fill='currentColor'
+      d='M12.62 20.81C12.28 20.93 11.72 20.93 11.38 20.81C8.48 19.82 2 15.69 2 8.68998C2 5.59998 4.49 3.09998 7.56 3.09998C9.38 3.09998 10.99 3.97998 12 5.33998C13.01 3.97998 14.63 3.09998 16.44 3.09998C19.51 3.09998 22 5.59998 22 8.68998C22 15.69 15.52 19.82 12.62 20.81Z'
+      stroke='currentColor'
       strokeLinecap='round'
       strokeLinejoin='round'
-      strokeWidth={1.5}
+      strokeWidth={strokeWidth}
     />
   </svg>
 );

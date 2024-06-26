@@ -26,3 +26,25 @@ export interface MoviesResponse {
     vote_count: number;
   }>;
 }
+
+export interface MovieDetails {
+  tmdbId: number;
+  title: string;
+  overview: string;
+  poster: string;
+  releaseDate: string;
+  voteAverage: number;
+  genres: Array<{ id: number; name: string }>;
+  productionCompanies: Array<{ id: number; name: string }>;
+}
+
+export interface MovieDetailsResponse {
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  vote_average: number;
+  genres: Array<{ id: number; name: string }>;
+  production_companies: Array<{ id: number; name: string }>;
+}
