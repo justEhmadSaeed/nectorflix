@@ -3,7 +3,7 @@ import SearchMovies from './searchMovies';
 import { getUpcomingMovies } from '@/services/tmdb';
 import { parseMoviesResponse } from '@/utils/helpers';
 
-export default async function Home() {
+export default async function Home(): Promise<JSX.Element> {
   const moviesResponse = await getUpcomingMovies();
   const moviesData = parseMoviesResponse(moviesResponse);
   return (
@@ -11,7 +11,7 @@ export default async function Home() {
       <div className='inline-block max-w-lg text-center justify-center gap-y-2'>
         <h1 className={title()}>Make&nbsp;</h1>
         <h1 className={title({ color: 'violet' })}>
-          Movies' Experience&nbsp;
+          Movies&apos; Experience&nbsp;
         </h1>
         <br />
         <h1 className={title()}>Unforgettably Immersive.</h1>

@@ -9,7 +9,7 @@ export interface MoviesResponse {
   page: number;
   total_pages: number;
   total_results: number;
-  results: {
+  results: Array<{
     adult: boolean;
     backdrop_path: string;
     genre_ids: number[];
@@ -24,5 +24,5 @@ export interface MoviesResponse {
     video: boolean;
     vote_average: number;
     vote_count: number;
-  }[];
+  }>;
 }

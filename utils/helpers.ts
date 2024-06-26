@@ -1,4 +1,4 @@
-import { Movie, MoviesResponse } from '@/interfaces';
+import { type Movie, type MoviesResponse } from '@/interfaces';
 
 export const parseMoviesResponse = (
   response: MoviesResponse

@@ -1,13 +1,13 @@
 import { searchMovies } from '@/services/tmdb';
-import { AxiosError } from 'axios';
-import { NextRequest, NextResponse } from 'next/server';
+import { type AxiosError } from 'axios';
+import { type NextRequest, NextResponse } from 'next/server';
 
-interface IParams {
-  query: string;
-}
-export async function GET(request: NextRequest) {
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse> {
   try {
-    const query = request.nextUrl.searchParams.get('query') as string;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const query = request.nextUrl.searchParams.get('query')!;
     const movies = await searchMovies(query);
     return NextResponse.json(movies);
   } catch (error) {

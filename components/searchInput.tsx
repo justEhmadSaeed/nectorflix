@@ -1,14 +1,12 @@
 import { Input } from '@nextui-org/input';
 import { SearchIcon } from './icons';
+import { useMoviesStore } from '@/store/movie';
 
-interface SearchInputProps {
-  value: string;
-  onChange: (value: string) => void;
-}
-export default function SearchInput({
-  value,
-  onChange,
-}: SearchInputProps) {
+export default function SearchInput(): JSX.Element {
+  const { query, handleQueryChange } = useMoviesStore((state) => ({
+    query: state.query,
+    handleQueryChange: state.handleQueryChange,
+  }));
   return (
     <Input
       aria-label='Search'
@@ -23,8 +21,12 @@ export default function SearchInput({
         <SearchIcon className='text-base text-default-400 pointer-events-none flex-shrink-0' />
       }
       type='search'
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+      value={query}
+      onChange={(e) => {
+        void (async () => {
+          await handleQueryChange(e.target.value);
+        })();
+      }}
     />
   );
 }

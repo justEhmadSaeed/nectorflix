@@ -1,4 +1,4 @@
-import { Movie, MoviesResponse } from '@/interfaces';
+import { type Movie, type MoviesResponse } from '@/interfaces';
 import axios from 'axios';
 
 const BASE_TMDB_URL = 'https://api.themoviedb.org/3';

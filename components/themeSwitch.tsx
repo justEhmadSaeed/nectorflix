@@ -1,8 +1,8 @@
 'use client';
 
-import { FC } from 'react';
+import { type FC } from 'react';
 import { VisuallyHidden } from '@react-aria/visually-hidden';
-import { SwitchProps, useSwitch } from '@nextui-org/switch';
+import { type SwitchProps, useSwitch } from '@nextui-org/switch';
 import { useTheme } from 'next-themes';
 import { useIsSSR } from '@react-aria/ssr';
 import clsx from 'clsx';
@@ -21,7 +21,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   const { theme, setTheme } = useTheme();
   const isSSR = useIsSSR();
 
-  const onChange = () => {
+  const onChange = (): void => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
 
@@ -72,7 +72,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
           ),
         })}
       >
-        {!isSelected || isSSR ? (
+        {isSelected === false || isSSR ? (
           <SunFilledIcon size={22} />
         ) : (
           <MoonFilledIcon size={22} />
