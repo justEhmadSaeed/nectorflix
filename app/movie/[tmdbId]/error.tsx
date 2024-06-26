@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { Button } from '@/utils/nextui';
+import Link from 'next/link';
 
 export default function Error({
   error,
@@ -18,11 +19,13 @@ export default function Error({
 
   return (
     <div className='mt-10 w-full flex flex-col justify-center gap-6'>
-      <h2 className='text-center text-3xl'>Something went wrong!</h2>
+      <h2 className='text-center text-3xl'>{error.message}</h2>
       <div className='text-center'>
         <Button
           variant='bordered'
           size='lg'
+          as={Link}
+          href='/'
           onClick={
             // Attempt to recover by trying to re-render the segment
             () => {
@@ -30,7 +33,7 @@ export default function Error({
             }
           }
         >
-          Try again
+          Go to Homepage
         </Button>
       </div>
     </div>

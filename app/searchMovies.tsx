@@ -3,6 +3,7 @@ import MoviesGrid from '@/components/moviesGrid';
 import SearchInput from '@/components/searchInput';
 import { type Movie } from '@/interfaces';
 import { useMoviesStore } from '@/store/movie';
+import { Spinner } from '@/utils/nextui';
 
 export default function SearchMovies({
   upcomingMovies,
@@ -26,6 +27,7 @@ export default function SearchMovies({
       <div className=' lg:w-2/3'>
         <SearchInput />
       </div>
+      {isLoading && <Spinner color='secondary' />}
       {query !== '' && !isLoading && searchedMovies.length === 0 && (
         <p className='text-center text-default-500'>
           No movies found!

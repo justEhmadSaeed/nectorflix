@@ -2,7 +2,7 @@ import {
   type MoviesResponse,
   type MovieDetailsResponse,
 } from '@/interfaces';
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 
 const BASE_TMDB_URL = 'https://api.themoviedb.org/3';
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
@@ -39,8 +39,16 @@ export const searchMovies = async (
 export const getMovieDetails = async (
   tmdbId: number
 ): Promise<MovieDetailsResponse> => {
-  const response = await tmdbClient.get<MovieDetailsResponse>(
-    `movie/${tmdbId}`
-  );
-  return response.data;
+  try {
+    const response = await tmdbClient.get<MovieDetailsResponse>(
+      `movie/${tmdbId}`
+    );
+    return response.data;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (axiosError?.response?.status === 404) {
+      throw new Error('Movie not found');
+    }
+    throw new Error('Something went wrong');
+  }
 };
