@@ -7,11 +7,11 @@ export const siteConfig = {
   navItems: [
     {
       label: 'Home',
-      href: '/',
+      href: () => '/',
     },
     {
       label: 'Watchlist',
-      href: '/watchlist',
+      href: (watchlistId?: string) => '/watchlist/' + watchlistId,
     },
   ],
   navMenuItems: [

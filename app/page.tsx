@@ -1,7 +1,8 @@
 import { title } from '@/components/primitives';
-import SearchMovies from './searchMovies';
 import { getUpcomingMovies } from '@/services/tmdb';
 import { parseMoviesResponse } from '@/utils/helpers';
+
+import SearchMovies from '@/components/homepage/searchMovies';
 
 export default async function Home(): Promise<JSX.Element> {
   const moviesResponse = await getUpcomingMovies();

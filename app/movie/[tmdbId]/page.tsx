@@ -1,7 +1,7 @@
 import { getMovieDetails } from '@/services/tmdb';
 import { parseMovieDetailsResponse } from '@/utils/helpers';
-import MovieDetailsWrapper from './movieDetailsWrapper';
 
+import MovieDetailsWrapper from '@/components/movieDetail/movieDetailsWrapper';
 export default async function Page({
   params,
 }: {
