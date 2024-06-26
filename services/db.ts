@@ -20,6 +20,7 @@ export const addMovieToWatchlist = async (
   watchlistId: number,
   tmdbId: number,
   title: string,
+  year: number,
   poster: string
 ): Promise<boolean> => {
   try {
@@ -28,6 +29,7 @@ export const addMovieToWatchlist = async (
         watchlistId,
         tmdbId,
         title,
+        year,
         poster,
       },
     });
@@ -45,7 +47,7 @@ export const removeMovieFromWatchlist = async (
 ): Promise<boolean> => {
   try {
     await prisma.movie.delete({
-      where: { watchlistId_tmdbId: { watchlistId, tmdbId } },
+      where: { watchlistId, tmdbId },
     });
     return true;
   } catch (error) {
@@ -53,4 +55,16 @@ export const removeMovieFromWatchlist = async (
     console.error('Error removing movie from watchlist:', error);
     return false;
   }
+};
+
+// check where a movie exists in a watchlist
+export const movieExistsInWatchlist = async (
+  watchlistId: number,
+  tmdbId: number
+): Promise<boolean> => {
+  const movie = await prisma.movie.findUnique({
+    where: { watchlistId, tmdbId },
+  });
+
+  return movie != null;
 };

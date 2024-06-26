@@ -5,9 +5,9 @@ import MovieDetailsWrapper from '@/components/movieDetail/movieDetailsWrapper';
 export default async function Page({
   params,
 }: {
-  params: { tmdbId: number };
+  params: { tmdbId: string };
 }): Promise<JSX.Element> {
-  const { tmdbId } = params;
+  const tmdbId = parseInt(params.tmdbId);
   const movieDetailsResponse = await getMovieDetails(tmdbId);
   const movieDetails = parseMovieDetailsResponse(
     movieDetailsResponse
@@ -24,7 +24,12 @@ export default async function Page({
   } = movieDetails;
 
   return (
-    <MovieDetailsWrapper name={name} poster={poster}>
+    <MovieDetailsWrapper
+      title={name}
+      id={tmdbId}
+      year={new Date(releaseDate).getFullYear()}
+      poster={poster}
+    >
       <div className='flex flex-col gap-4'>
         <p>{overview}</p>
         <div className='flex items-center'>
