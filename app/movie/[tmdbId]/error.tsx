@@ -6,7 +6,6 @@ import Link from 'next/link';
 
 export default function Error({
   error,
-  reset,
 }: {
   error: Error;
   reset: () => void;
@@ -21,18 +20,7 @@ export default function Error({
     <div className='mt-10 w-full flex flex-col justify-center gap-6'>
       <h2 className='text-center text-3xl'>{error.message}</h2>
       <div className='text-center'>
-        <Button
-          variant='bordered'
-          size='lg'
-          as={Link}
-          href='/'
-          onClick={
-            // Attempt to recover by trying to re-render the segment
-            () => {
-              reset();
-            }
-          }
-        >
+        <Button variant='bordered' size='lg' as={Link} href='/'>
           Go to Homepage
         </Button>
       </div>
