@@ -1,5 +1,6 @@
 'use server';
 
+import type { Movie } from '@/interfaces';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -67,4 +68,12 @@ export const movieExistsInWatchlist = async (
   });
 
   return movie != null;
+};
+
+export const getMoviesByWatchlistId = async (
+  watchlistId: number
+): Promise<Movie[]> => {
+  return await prisma.movie.findMany({
+    where: { watchlistId },
+  });
 };

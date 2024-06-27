@@ -80,7 +80,11 @@ export default function MovieDetailsWrapper({
             <Spinner color='secondary' className='p-1' />
           ) : (
             <>
-              <span>Add to Watchlist</span>
+              {added ?? false ? (
+                <span>Remove from Watchlist</span>
+              ) : (
+                <span>Add to Watchlist</span>
+              )}
               <HeartIcon
                 className={
                   added ?? false ? '[&>path]:stroke-transparent' : ''

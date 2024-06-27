@@ -1,13 +1,13 @@
 import { getMovieDetails } from '@/services/tmdb';
 import { parseMovieDetailsResponse } from '@/utils/helpers';
-
 import MovieDetailsWrapper from '@/components/movieDetail/movieDetailsWrapper';
+
 export default async function Page({
   params,
 }: {
   params: { tmdbId: string };
 }): Promise<JSX.Element> {
-  const tmdbId = parseInt(params.tmdbId);
+  const tmdbId = parseInt(params?.tmdbId);
   const movieDetailsResponse = await getMovieDetails(tmdbId);
   const movieDetails = parseMovieDetailsResponse(
     movieDetailsResponse
@@ -58,7 +58,5 @@ export default async function Page({
         </div>
       </div>
     </MovieDetailsWrapper>
-    //   </CardBody>
-    // </Card>
   );
 }

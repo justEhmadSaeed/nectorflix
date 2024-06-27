@@ -97,7 +97,11 @@ export const Navbar = (): JSX.Element => {
         <div className='mx-4 mt-2 flex flex-col gap-2'>
           {siteConfig.navItems.map((item) => (
             <NavbarMenuItem key={item.label}>
-              <Link color={'foreground'} href='#' size='lg'>
+              <Link
+                color={'foreground'}
+                href={item.href(watchlistId?.toString())}
+                size='lg'
+              >
                 {item.label}
               </Link>
             </NavbarMenuItem>

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import type { Movie } from '@/interfaces';
 import {
   addMovieToWatchlist,
   removeMovieFromWatchlist,
@@ -11,6 +12,8 @@ interface WatchlistStore {
   isSuccess: boolean;
   added: boolean | undefined;
   setAdded: (added: boolean) => void;
+  watchlistMovies: Movie[];
+  setWatchlistMovies: (watchlistMovies: Movie[]) => void;
   addMovie: (
     tmdbId: number,
     title: string,
@@ -28,6 +31,10 @@ export const useWatchlistStore = create<WatchlistStore>(
     added: undefined,
     setAdded: (added: boolean) => {
       set(() => ({ added, isLoading: false }));
+    },
+    watchlistMovies: [],
+    setWatchlistMovies: (watchlistMovies: Movie[]) => {
+      set(() => ({ watchlistMovies, isLoading: false }));
     },
     addMovie: async (tmdbId, title, year, poster) => {
       try {
@@ -49,7 +56,17 @@ export const useWatchlistStore = create<WatchlistStore>(
           year,
           poster
         );
-        set(() => ({ isLoading: false, isSuccess, added: true }));
+        set(() => ({
+          isLoading: false,
+          isSuccess,
+          added: true,
+          watchlistMovies: get().watchlistMovies.concat({
+            tmdbId,
+            title,
+            year,
+            poster,
+          }),
+        }));
       } catch (error) {
         console.error('Error adding movie to watchlist:', error);
         set(() => ({ isLoading: false, isSuccess: false }));
@@ -72,14 +89,21 @@ export const useWatchlistStore = create<WatchlistStore>(
           watchlistId,
           tmdbId
         );
-        set(() => ({ isLoading: false, isSuccess, added: false }));
+        set(() => ({
+          isLoading: false,
+          isSuccess,
+          added: false,
+          watchlistMovies: get().watchlistMovies.filter(
+            (movie) => movie.tmdbId !== tmdbId
+          ),
+        }));
       } catch (error) {
         console.error('Error removing movie from watchlist:', error);
         set(() => ({ isLoading: false, isSuccess: false }));
       }
     },
     setWatchlistId: (watchlistId) => {
-      set(() => ({ watchlistId }));
+      set(() => ({ watchlistId, watchlistMovies: [] }));
     },
   })
 );
