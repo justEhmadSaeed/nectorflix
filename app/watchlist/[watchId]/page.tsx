@@ -14,12 +14,7 @@ export default async function WatchlistPage({
       {watchlist.length === 0 ? (
         <p>Your watchlist is empty.</p>
       ) : (
-        <div className='flex flex-wrap'>
-          <Watchlist
-            watchlist={watchlist}
-            watchlistId={watchlistId}
-          />
-        </div>
+        <Watchlist watchlist={watchlist} />
       )}
     </div>
   );

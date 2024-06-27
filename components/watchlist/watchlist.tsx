@@ -6,11 +6,9 @@ import { useEffect } from 'react';
 
 export default function Watchlist({
   watchlist,
-  watchlistId,
 }: {
   watchlist: Movie[];
-  watchlistId: number;
-}): JSX.Element[] {
+}): JSX.Element {
   const { watchlistMovies, setWatchlistMovies } = useWatchlistStore(
     (state) => ({
       watchlistMovies: state.watchlistMovies,
@@ -21,7 +19,11 @@ export default function Watchlist({
   useEffect(() => {
     setWatchlistMovies(watchlist);
   }, [setWatchlistMovies, watchlist]);
-  return watchlistMovies.map((movie) => (
-    <MovieCard key={movie.tmdbId} movie={movie} />
-  ));
+  return (
+    <div className='flex flex-wrap'>
+      {watchlistMovies.map((movie) => (
+        <MovieCard key={movie.tmdbId} movie={movie} />
+      ))}
+    </div>
+  );
 }

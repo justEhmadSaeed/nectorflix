@@ -9,7 +9,7 @@ export const createNewWatchlist = async (): Promise<
   number | undefined
 > => {
   try {
-    const watchlist = await prisma.watchlist.create();
+    const watchlist = await prisma.watchlist.create({});
     return watchlist.id;
   } catch (error) {
     // eslint-disable-next-line no-console
