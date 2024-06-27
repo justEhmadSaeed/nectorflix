@@ -12,7 +12,7 @@ datasource db {
 
 model Watchlist {
   id     Int     @id @default(autoincrement())
-  movies Movie[]
+  movies WatchlistMovie[]
 }
 
 model Movie {
@@ -20,6 +20,15 @@ model Movie {
   title       String
   year        Int
   poster      String
-  Watchlist   Watchlist? @relation(fields: [watchlistId], references: [id])
-  watchlistId Int?
+  watchlists WatchlistMovie[]
+}
+
+model WatchlistMovie {
+  watchlistId  Int
+  movieId     Int
+
+  watchlist   Watchlist   @relation(fields: [watchlistId], references:[id])
+  movie       Movie       @relation(fields: [movieId], references:[tmdbId])
+
+  @@id([watchlistId, movieId])
 }

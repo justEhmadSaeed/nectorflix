@@ -63,37 +63,41 @@ export default function MovieDetailsWrapper({
     <Card>
       <CardHeader style={{ justifyContent: 'space-between' }}>
         <h1>{title}</h1>
-        <Button
-          size='sm'
-          color='secondary'
-          variant='bordered'
-          disabled={isLoading}
-          onPress={(e) =>
-            void (async () => {
-              if (added === false)
-                await addMovie(id, title, year, poster);
-              else await removeMovie(id);
-            })()
-          }
-        >
-          {isLoading ? (
-            <Spinner color='secondary' className='p-1' />
-          ) : (
-            <>
-              {added ?? false ? (
-                <span>Remove from Watchlist</span>
-              ) : (
-                <span>Add to Watchlist</span>
-              )}
-              <HeartIcon
-                className={
-                  added ?? false ? '[&>path]:stroke-transparent' : ''
-                }
-                fill={added ?? false ? 'currentColor' : 'none'}
-              />
-            </>
-          )}
-        </Button>
+        {(watchlistId != null) && (
+          <Button
+            size='sm'
+            color='secondary'
+            variant='bordered'
+            disabled={isLoading}
+            onPress={(e) =>
+              void (async () => {
+                if (added === false)
+                  await addMovie(id, title, year, poster);
+                else await removeMovie(id);
+              })()
+            }
+          >
+            {isLoading ? (
+              <Spinner color='secondary' className='p-1' />
+            ) : (
+              <>
+                {added ?? false ? (
+                  <span>Remove from Watchlist</span>
+                ) : (
+                  <span>Add to Watchlist</span>
+                )}
+                <HeartIcon
+                  className={
+                    added ?? false
+                      ? '[&>path]:stroke-transparent'
+                      : ''
+                  }
+                  fill={added ?? false ? 'currentColor' : 'none'}
+                />
+              </>
+            )}
+          </Button>
+        )}
       </CardHeader>
       {!isSuccess && (
         <span>

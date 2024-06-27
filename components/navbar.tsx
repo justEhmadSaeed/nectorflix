@@ -1,4 +1,8 @@
 'use client';
+import React, { useEffect } from 'react';
+import NextLink from 'next/link';
+import clsx from 'clsx';
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -7,17 +11,13 @@ import {
   NavbarBrand,
   NavbarItem,
   NavbarMenuItem,
-} from '@nextui-org/navbar';
-import { Link } from '@nextui-org/link';
-import { link as linkStyles } from '@nextui-org/theme';
-import NextLink from 'next/link';
-import clsx from 'clsx';
-
+  Link,
+  link as linkStyles,
+} from '@/utils/nextui';
 import { siteConfig } from '@/config/site';
 import { ThemeSwitch } from '@/components/themeSwitch';
 import { Logo } from '@/components/icons';
 import { useWatchlistStore } from '@/store/watchlist';
-import { useEffect } from 'react';
 import { createNewWatchlist } from '@/services/db';
 
 export const Navbar = (): JSX.Element => {
@@ -62,20 +62,25 @@ export const Navbar = (): JSX.Element => {
           </NextLink>
         </NavbarBrand>
         <ul className='hidden lg:flex gap-4 justify-start ml-2'>
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href()}>
-              <NextLink
-                className={clsx(
-                  linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium'
-                )}
-                color='foreground'
-                href={item.href(watchlistId?.toString())}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
+          {siteConfig.navItems.map((item) =>
+            item.label === 'Watchlist' &&
+            watchlistId === undefined ? (
+              <React.Fragment key={item.href()}></React.Fragment>
+            ) : (
+              <NavbarItem key={item.href()}>
+                <NextLink
+                  className={clsx(
+                    linkStyles({ color: 'foreground' }),
+                    'data-[active=true]:text-primary data-[active=true]:font-medium'
+                  )}
+                  color='foreground'
+                  href={item.href(watchlistId?.toString())}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            )
+          )}
         </ul>
       </NavbarContent>
 

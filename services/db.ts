@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use server';
 
 import type { Movie } from '@/interfaces';
@@ -10,11 +11,24 @@ export const createNewWatchlist = async (): Promise<
 > => {
   try {
     const watchlist = await prisma.watchlist.create({});
-    return watchlist.id;
+    return watchlist?.id;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Error creating new watchlist:', error);
   }
+};
+
+const getOrCreateMovie = async (movieData: Movie): Promise<Movie> => {
+  let movie = await prisma.movie.findUnique({
+    where: { tmdbId: movieData.tmdbId },
+  });
+  // Movie doesn't exist, create and link it
+  if (movie == null) {
+    movie = await prisma.movie.create({
+      data: movieData,
+    });
+  }
+
+  return movie;
 };
 
 export const addMovieToWatchlist = async (
@@ -25,18 +39,18 @@ export const addMovieToWatchlist = async (
   poster: string
 ): Promise<boolean> => {
   try {
-    await prisma.movie.create({
-      data: {
-        watchlistId,
-        tmdbId,
-        title,
-        year,
-        poster,
-      },
+    const movieData = {
+      tmdbId,
+      title,
+      year,
+      poster,
+    };
+    const movie = await getOrCreateMovie(movieData);
+    await prisma.watchlistMovie.create({
+      data: { watchlistId, movieId: movie.tmdbId },
     });
     return true;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Error adding movie to watchlist:', error);
     return false;
   }
@@ -47,12 +61,11 @@ export const removeMovieFromWatchlist = async (
   tmdbId: number
 ): Promise<boolean> => {
   try {
-    await prisma.movie.delete({
-      where: { watchlistId, tmdbId },
+    await prisma.watchlistMovie.deleteMany({
+      where: { watchlistId, movieId: tmdbId },
     });
     return true;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Error removing movie from watchlist:', error);
     return false;
   }
@@ -63,17 +76,36 @@ export const movieExistsInWatchlist = async (
   watchlistId: number,
   tmdbId: number
 ): Promise<boolean> => {
-  const movie = await prisma.movie.findUnique({
-    where: { watchlistId, tmdbId },
-  });
-
-  return movie != null;
+  try {
+    const watchlistCount = await prisma.watchlistMovie.count({
+      where: { watchlistId, movieId: tmdbId },
+    });
+    return watchlistCount > 0;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 };
 
 export const getMoviesByWatchlistId = async (
   watchlistId: number
 ): Promise<Movie[]> => {
-  return await prisma.movie.findMany({
-    where: { watchlistId },
-  });
+  try {
+    const watchlist = await prisma.watchlist.findUnique({
+      where: { id: watchlistId },
+      include: {
+        movies: {
+          include: { movie: true },
+        },
+      },
+    });
+    return (
+      watchlist?.movies.map(
+        (movie: { movie: Movie }) => movie.movie
+      ) ?? []
+    );
+  } catch (error) {
+    console.error('Error getting movies by watchlist ID:', error);
+    return [];
+  }
 };
