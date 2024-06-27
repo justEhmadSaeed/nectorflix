@@ -19,12 +19,15 @@ export const useMoviesStore = create<MoviesStore>((set, get) => ({
   handleQueryChange: async (query: string) => {
     clearTimeout(get().searchTimeout);
     set(() => ({ query, isLoading: true }));
-
+    
     if (query.length === 0) {
       set(() => ({ searchedMovies: [], isLoading: false }));
       return;
     }
-
+    
+    // this functionality is better suited to be implemented 
+    // in a subscriber model, but for the sake of simplicity
+    // and time constraints, I tended to keep it here
     set(() => ({
       searchTimeout: setTimeout(() => {
         void (async () => {

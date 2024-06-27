@@ -1,53 +1,72 @@
-# Next.js & NextUI Template
+# NECTORFLIX 🍿
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+This project provides an interface to search and bookmark movies, for managing watchlists using a many-to-many relationship between movies and watchlists. It leverages Prisma as an ORM for interacting with a SQLite database, environment variables for secure configuration, Next.js as a server-side rendering (SSR) framework, NextUI for design components and Zustand for state management within the frontend.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+## Prerequisites:
 
-## Technologies Used
+Node.js and npm (or yarn) installed on your system.
+Basic understanding of JavaScript, Prisma, SQLite, Next.js, and Zustand.
+Setup:
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
-
-## How to Use
-
-### Use the template with create-next-app
-
-To create a new project based on this template using `create-next-app`, run the following command:
+### Clone the Repository:
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+git clone git@github.com:justEhmadSaeed/nectorflix.git
+cd nectorflix
 ```
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+## Install Dependencies:
 
 ```bash
-npm install
+npm install # or yarn install
 ```
 
-### Run the development server
+## Create env files
+
+Create a .env.local for Next.js and a .env File for Prisma DB URL in your project root directory.
+
+Add the following environment variables, replacing placeholders with your actual values:
 
 ```bash
-npm run dev
+# .env
+DATABASE_URL=file:./dev.db # Path to your SQLite database file
 ```
-
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
 
 ```bash
-public-hoist-pattern[]=*@nextui-org/*
+# .env.local
+TMDB_API_KEY="TMDB_API_KEY" # your tmdb api key
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## Run Database Migrations:
 
-## License
+```bash
+npx prisma migrate dev # Replace 'dev' with 'prod' if deploying to production
+npx prisma generate
+```
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+## Running the Application:
+
+Start the Development Server:
+
+```bash
+npm run dev # or yarn dev
+```
+
+This will start the Next.js development server, typically accessible at http://localhost:3001 by default.
+
+By following these steps, you'll have a locally running application that demonstrates the use of Prisma, SQLite, Next.js, NextUI and Zustand.
+
+Note: The `prisma/dev.db` file is committed intentionally to use it as a dump. Feel free to delete it.
+
+## Deployment (Optional):
+
+Refer to Next.js documentation for deployment instructions based on your preferred platform (e.g., Vercel, Netlify).
+Ensure environment variables are set up appropriately in your deployment environment.
+
+Use the following custom build command:
+
+```bash
+npm run vercel-build # or yarn vercel-build
+```
+
+Feel free to contact me if I unintentionally missed something.
