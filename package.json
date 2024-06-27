@@ -7,7 +7,9 @@
 		"dev": "next dev --turbo -p 3001",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
+		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix",
+		"vercel-build": "prisma generate && prisma migrate deploy && next build",
+		"prisma:generate": "prisma generate"
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.4.2",
